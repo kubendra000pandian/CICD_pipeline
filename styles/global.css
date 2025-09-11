@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+
+.large-chart-wrapper {
+    @apply h-248_  bg-white rounded-lg px-3 py-3.5 flex flex-col justify-between;
+}
+
+.small-chart-wrapper {
+    @apply   w-44 large-chart-wrapper;
+    
+}
+
