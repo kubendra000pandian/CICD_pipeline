@@ -4,13 +4,6 @@ on:
  push:
    branches:
      - test-branch
-
-env:
- DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
- DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
- DOCKER_REPO: ${{ secrets.DOCKER_REPO }}
- DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-
 jobs:
 
  build:
