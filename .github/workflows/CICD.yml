@@ -62,8 +62,8 @@ jobs:
          echo "::set-output name=new_version::$new_version"
 
      - name: Build Docker Image
-       run: docker build -t kubendrapandian10d/react-project:${{ steps.increment_version.outputs.new_version }} .
+       run: docker build -t react-project:${{ steps.increment_version.outputs.new_version }} .
 
      - name: Push Docker Image
-       run: docker push kubendrapandian10d/react-project:${{ steps.increment_version.outputs.new_version }}
+       run: docker push react-project:${{ steps.increment_version.outputs.new_version }}
 
