@@ -1,32 +1,24 @@
 pipeline {
+
     agent any
 
-    environment {
-        PROJECT_DIR = '/workspace/my-react-app'
-    }
-
     stages {
+
         stage('Install Dependencies') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'npm install'
-                }
+                sh 'npm install'
             }
         }
 
         stage('Build React App') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'docker build -t react-app .'
-                }
+                sh 'docker build -t react-app .'
             }
         }
 
@@ -41,4 +33,3 @@ pipeline {
         }
     }
 }
-
