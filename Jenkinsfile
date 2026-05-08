@@ -2,23 +2,33 @@ pipeline {
 
     agent any
 
+    environment {
+        PROJECT_DIR = '/var/lib/jenkins/workspace/CICD_pipeline'
+    }
+
     stages {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                dir("${PROJECT_DIR}") {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                dir("${PROJECT_DIR}") {
+                    sh 'npm run build'
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t react-app .'
+                dir("${PROJECT_DIR}") {
+                    sh 'docker build -t react-app .'
+                }
             }
         }
 
