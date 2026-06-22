@@ -3,43 +3,60 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = '/var/lib/jenkins/workspace/CICD_pipeline'
+        IMAGE_NAME = "react"
+        CONTAINER_NAME = "bb27f0b11527"
     }
 
     stages {
 
-        stage('Install Dependencies') {
+        stage('Checkout') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'npm install'
-                }
+                git branch: 'test-branch',
+                url: 'https://github.com/kubendra000pandian/CICD_pipeline'
             }
         }
 
-        stage('Build React App') {
+        stage('Build') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'npm run build'
-                }
+                sh 'echo Building Application'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'echo Running Tests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                dir("${PROJECT_DIR}") {
-                    sh 'docker build -t react-app .'
-                }
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy') {
             steps {
                 sh '''
-                    docker stop react-app || true
-                    docker rm react-app || true
-                    docker run -d -p 4000:80 --name react-app react-app
+                docker rm -f $CONTAINER_NAME || true
+
+                docker run -d \
+                --name $CONTAINER_NAME \
+                -p 3000 \
+                $IMAGE_NAME
                 '''
             }
         }
+    }
+
+    post {
+
+        success {
+            echo 'Deployment Successful'
+        }
+
+        failure {
+            echo 'Deployment Failed'
+        }
+
     }
 }
